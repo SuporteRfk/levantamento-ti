@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Levantamento TI</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:1300px;
+    margin:auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+    color:#1f4e78;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.full{
+    grid-column:span 2;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.checkbox-group{
+    background:#f9f9f9;
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.checkbox-group label{
+    display:inline-block;
+    margin-right:15px;
+    margin-bottom:10px;
+    font-weight:normal;
+}
+
+.required{
+    color:red;
+}
+
+.campo-obrigatorio{
+    border:2px solid red !important;
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    border-radius:5px;
+    padding:10px 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.save{
+    background:#28a745;
+    color:white;
+}
+
+.clear{
+    background:#dc3545;
+    color:white;
+}
+
+.export{
+    background:#007bff;
+    color:white;
+}
+
+.edit{
+    background:#ffc107;
+    color:black;
+}
+
+.delete{
+    background:#dc3545;
+    color:white;
+}
+
+.clean-report{
+    background:#6c757d;
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:30px;
+    font-size:14px;
+}
+
+table th{
+    background:#1f4e78;
+    color:white;
+    padding:10px;
+}
+
+table td{
+    border:1px solid #ddd;
+    padding:8px;
+    vertical-align:top;
+}
+
+table tr:nth-child(even){
+    background:#f2f2f2;
+}
+
+.actions{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Levantamento TI</h1>
+
+<div class="form-grid">
+
+<div>
+<label for="nome">
+Nome Completo
+</label>
+<input type="text" id="nome">
+</div>
+
+<div>
+<label for="cargo">
+Cargo
+<span class="required">*</span>
+</label>
+<input type="text" id="cargo">
+</div>
+
+<div>
+<label for="setor">
+Setor
+<span class="required">*</span>
+</label>
+<input type="text" id="setor">
+</div>
+
+<div>
+<label for="equipamento">
+Equipamento
+<span class="required">*</span>
+</label>
+
+<select id="equipamento" onchange="validarCampos()">
+
+<option value="">Selecione</option>
+<option value="Desktop">Desktop</option>
+<option value="Notebook">Notebook</option>
+<option value="Não Usará">Não Usará</option>
+
+</select>
+</div>
+
+<div>
+<label id="labelAntivirus" for="antivirus">
+Antivírus
+</label>
+
+<select id="antivirus">
+
+<option value="">Selecione</option>
+<option value="Sim">Sim</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div>
+<label for="celular">
+Celular
+</label>
+
+<select id="celular" onchange="validarCelular()">
+
+<option value="">Selecione</option>
+<option value="Sim">Sim</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div>
+<label id="labelChip" for="chip">
+CHIP/Móvel
+</label>
+
+<select id="chip">
+
+<option value="">Selecione</option>
+<option value="Sim">Sim</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div>
+<label for="powerbi">
+Power BI
+</label>
+
+<select id="powerbi">
+
+<option value="">Selecione</option>
+<option value="Sim">Sim</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div>
+<label for="protheus">
+Licença Protheus
+</label>
+
+<select id="protheus" onchange="validarProtheus()">
+
+<option value="">Selecione</option>
+<option value="Sim">Sim</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div>
+<label id="labelOffice" for="licencaoffice">
+Licença Office
+</label>
+
+<select id="licencaoffice">
+
+<option value="">Selecione</option>
+<option value="Instalada">Instalada</option>
+<option value="Online">Online</option>
+
+</select>
+</div>
+
+<div>
+<label for="licencamercanet">
+Licença Mercanet
+</label>
+
+<select id="licencamercanet">
+
+<option value="">Selecione</option>
+<option value="Mobile">Mobile</option>
+<option value="Web">Web</option>
+<option value="Não">Não</option>
+
+</select>
+</div>
+
+<div
+class="full checkbox-group"
+id="grupoModulosProtheus"
+style="display:none;"
+>
+
+<label>Módulos Protheus</label>
+
+<br><br>
+
+<label>
+    <input
+        type="checkbox"
+        name="modulos"
+        value="BackOffice"
+    >
+    BackOffice
+</label>
+
+<label>
+<input
+    type="checkbox"
+    name="modulos"
+    value="D&L"
+    id="moduloDL"
+    onchange="validarDL()"
+>
+D&L
+</label>
+
+<label>
+<input
+type="checkbox"
+name="modulos"
+value="Manufatura"
+id="moduloManufaturaCheck"
+onchange="validarManufatura()"
+>
+Manufatura
+</label>
+
+</div>
+
+<div
+class="full checkbox-group"
+id="grupoDL"
+style="display:none;"
+>
+
+<label>D&L</label>
+
+<br><br>
+
+<label>
+<input
+type="checkbox"
+name="moduloDL"
+value="039 - OMS - Gestão de Distribuição"
+>
+039 - OMS - Gestão de Distribuição
+</label>
+
+<label>
+<input
+type="checkbox"
+name="moduloDL"
+value="043 - TMS - Gestão de Transportes"
+>
+043 - TMS - Gestão de Transportes
+</label>
+
+</div>
+
+<div
+class="full checkbox-group"
+id="grupoManufatura"
+style="display:none;"
+>
+
+<label>Manufatura</label>
+
+<br><br>
+
+<label>
+<input
+type="checkbox"
+name="moduloManufatura"
+value="046 - ACD - Autom. Coleta de Dados"
+>
+046 - ACD - Autom. Coleta de Dados
+</label>
+
+<label>
+<input
+type="checkbox"
+name="moduloManufatura"
+value="010 - PCP - Planej.Contr.Produção"
+>
+010 - PCP - Planej.Contr.Produção
+</label>
+
+</div>
+
+<div class="full">
+
+<label for="obs">
+Observações
+</label>
+
+<textarea id="obs" rows="4"></textarea>
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button
+type="button"
+class="save"
+onclick="salvarTi()"
+>
+Salvar
+</button>
+
+<button
+type="button"
+class="clear"
+onclick="limparFormulario()"
+>
+Limpar
+</button>
+
+<button
+type="button"
+class="export"
+onclick="exportarCSV()"
+>
+Exportar CSV
+</button>
+
+<button
+type="button"
+class="clean-report"
+onclick="limparRelatorio()"
+>
+Limpar Relatório
+</button>
+
+</div>
+
+<table id="tabelaTi">
+
+<thead>
+
+<tr>
+
+<th>Nome</th>
+<th>Cargo</th>
+<th>Setor</th>
+<th>Equipamento</th>
+<th>Office</th>
+<th>Celular</th>
+<th>CHIP</th>
+<th>Protheus</th>
+<th>Módulos</th>
+<th>D&L</th>
+<th>Manufatura</th>
+<th>Observações</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let ti = [];
+let editandoIndex = null;
+
+try{
+
+    ti =
+        JSON.parse(
+            localStorage.getItem('ti')
+        ) || [];
+
+}catch(e){
+
+    ti = [];
+
+}
+
+function validarCampos(){
+
+    const equipamento =
+        document.getElementById('equipamento').value;
+
+    const antivirus =
+        document.getElementById('antivirus');
+
+    const office =
+        document.getElementById('licencaoffice');
+
+    if(
+        equipamento === "Notebook"
+        ||
+        equipamento === "Desktop"
+    ){
+
+        antivirus.required = true;
+        office.required = true;
+
+        antivirus.value = "Sim";
+
+    }else{
+
+        antivirus.required = false;
+        office.required = false;
+
+        antivirus.value = "";
+        office.value = "";
+
+    }
+
+}
+
+function validarCelular(){
+
+    const celular =
+        document.getElementById('celular').value;
+
+    const chip =
+        document.getElementById('chip');
+
+    if(celular === "Sim"){
+
+        chip.required = true;
+
+        document.getElementById(
+            'labelChip'
+        ).innerHTML =
+            'CHIP/Móvel <span class="required">*</span>';
+
+    }else{
+
+        chip.required = false;
+
+        chip.value = "";
+
+        document.getElementById(
+            'labelChip'
+        ).innerHTML =
+            'CHIP/Móvel';
+
+    }
+
+}
+
+function validarProtheus(){
+
+    const protheus =
+        document.getElementById('protheus').value;
+
+    document.getElementById(
+        'grupoModulosProtheus'
+    ).style.display =
+        protheus === "Sim"
+        ? "block"
+        : "none";
+
+}
+
+function validarDL(){
+
+    document.getElementById(
+        'grupoDL'
+    ).style.display =
+
+        document.getElementById(
+            'moduloDL'
+        ).checked
+
+        ? "block"
+        : "none";
+
+}
+
+function validarManufatura(){
+
+    document.getElementById(
+        'grupoManufatura'
+    ).style.display =
+
+        document.getElementById(
+            'moduloManufaturaCheck'
+        ).checked
+
+        ? "block"
+        : "none";
+
+}
+
+function salvarTi(){
+
+    const nome =
+        document.getElementById(
+            'nome'
+        ).value.trim();
+
+    const cargo =
+        document.getElementById(
+            'cargo'
+        ).value.trim();
+
+    const setor =
+        document.getElementById(
+            'setor'
+        ).value.trim();
+
+    const equipamento =
+        document.getElementById(
+            'equipamento'
+        ).value;
+
+    const antivirus =
+        document.getElementById(
+            'antivirus'
+        ).value;
+
+    const licencaoffice =
+        document.getElementById(
+            'licencaoffice'
+        ).value;
+
+    const celular =
+        document.getElementById(
+            'celular'
+        ).value;
+
+    const chip =
+        document.getElementById(
+            'chip'
+        ).value;
+
+    if(cargo === ""){
+        alert("Preencha o cargo.");
+        return;
+    }
+
+    if(setor === ""){
+        alert("Preencha o setor.");
+        return;
+    }
+
+    if(equipamento === ""){
+        alert("Selecione o equipamento.");
+        return;
+    }
+
+    if(
+        (
+            equipamento === "Desktop"
+            ||
+            equipamento === "Notebook"
+        )
+        &&
+        licencaoffice === ""
+    ){
+
+        alert(
+            "Licença Office é obrigatória."
+        );
+
+        return;
+
+    }
+
+    /* CORREÇÃO DA VALIDAÇÃO DO CHIP */
+
+    if(
+        celular === "Sim"
+        &&
+        chip === ""
+    ){
+
+        alert(
+            "CHIP/Móvel é obrigatório quando Celular for SIM."
+        );
+
+        return;
+
+    }
+
+    const registro = {
+
+        nome,
+
+        cargo,
+
+        setor,
+
+        equipamento,
+
+        antivirus,
+
+        licencaoffice,
+
+        celular,
+
+        chip,
+
+        powerbi:
+            document.getElementById(
+                'powerbi'
+            ).value,
+
+        protheus:
+            document.getElementById(
+                'protheus'
+            ).value,
+
+        licencamercanet:
+            document.getElementById(
+                'licencamercanet'
+            ).value,
+
+        modulosProtheus:
+            Array.from(
+                document.querySelectorAll(
+                    'input[name="modulos"]:checked'
+                )
+            ).map(cb => cb.value),
+
+        moduloDL:
+            Array.from(
+                document.querySelectorAll(
+                    'input[name="moduloDL"]:checked'
+                )
+            ).map(cb => cb.value),
+
+        moduloManufatura:
+            Array.from(
+                document.querySelectorAll(
+                    'input[name="moduloManufatura"]:checked'
+                )
+            ).map(cb => cb.value),
+
+        obs:
+            document.getElementById(
+                'obs'
+            ).value
+
+    };
+
+    if(editandoIndex !== null){
+
+        ti[editandoIndex] = registro;
+
+        editandoIndex = null;
+
+        alert(
+            "Registro atualizado com sucesso!"
+        );
+
+    }else{
+
+        ti.push(registro);
+
+        alert(
+            "Registro salvo com sucesso!"
+        );
+
+    }
+
+    localStorage.setItem(
+        'ti',
+        JSON.stringify(ti)
+    );
+
+    atualizarTabela();
+
+    limparFormulario();
+
+}
+
+function atualizarTabela(){
+
+    const tbody =
+        document.querySelector(
+            '#tabelaTi tbody'
+        );
+
+    tbody.innerHTML = "";
+
+    ti.forEach((item,index) => {
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${item.nome}</td>
+
+            <td>${item.cargo}</td>
+
+            <td>${item.setor}</td>
+
+            <td>${item.equipamento}</td>
+
+            <td>${item.licencaoffice || ""}</td>
+
+            <td>${item.celular}</td>
+
+            <td>${item.chip}</td>
+
+            <td>${item.protheus}</td>
+
+            <td>${(item.modulosProtheus || []).join(", ")}</td>
+
+            <td>${(item.moduloDL || []).join(", ")}</td>
+
+            <td>${(item.moduloManufatura || []).join(", ")}</td>
+
+            <td>${item.obs}</td>
+
+            <td>
+
+                <div class="actions">
+
+                    <button
+                    class="edit"
+                    onclick="editarRegistro(${index})"
+                    >
+                    Editar
+                    </button>
+
+                    <button
+                    class="delete"
+                    onclick="excluirRegistro(${index})"
+                    >
+                    Excluir
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+function editarRegistro(index){
+
+    const item = ti[index];
+
+    editandoIndex = index;
+
+    document.getElementById('nome').value =
+        item.nome;
+
+    document.getElementById('cargo').value =
+        item.cargo;
+
+    document.getElementById('setor').value =
+        item.setor;
+
+    document.getElementById('equipamento').value =
+        item.equipamento;
+
+    document.getElementById('antivirus').value =
+        item.antivirus;
+
+    document.getElementById('licencaoffice').value =
+        item.licencaoffice;
+
+    document.getElementById('celular').value =
+        item.celular;
+
+    document.getElementById('chip').value =
+        item.chip;
+
+    document.getElementById('protheus').value =
+        item.protheus;
+
+    document.getElementById('obs').value =
+        item.obs;
+
+    validarCampos();
+    validarCelular();
+    validarProtheus();
+
+}
+
+function excluirRegistro(index){
+
+    if(
+        confirm(
+            "Deseja realmente excluir este registro?"
+        )
+    ){
+
+        ti.splice(index,1);
+
+        localStorage.setItem(
+            'ti',
+            JSON.stringify(ti)
+        );
+
+        atualizarTabela();
+
+    }
+
+}
+
+function limparRelatorio(){
+
+    if(
+        confirm(
+            "Deseja apagar TODOS os registros?"
+        )
+    ){
+
+        ti = [];
+
+        localStorage.removeItem('ti');
+
+        atualizarTabela();
+
+        alert(
+            "Relatório apagado com sucesso!"
+        );
+
+    }
+
+}
+
+function limparFormulario(){
+
+    document
+        .querySelectorAll(
+            'input, textarea'
+        )
+        .forEach(el => {
+
+            if(el.type === "checkbox"){
+
+                el.checked = false;
+
+            }else{
+
+                el.value = "";
+
+            }
+
+        });
+
+    document
+        .querySelectorAll(
+            'select'
+        )
+        .forEach(sel => sel.value = "");
+
+    document.getElementById(
+        'grupoModulosProtheus'
+    ).style.display = "none";
+
+    document.getElementById(
+        'grupoDL'
+    ).style.display = "none";
+
+    document.getElementById(
+        'grupoManufatura'
+    ).style.display = "none";
+
+    editandoIndex = null;
+
+}
+
+function exportarCSV(){
+
+    let csv =
+        "Nome,Cargo,Setor,Equipamento,Office,Celular,CHIP,Protheus,Modulos,D&L,Manufatura,Observacoes\n";
+
+    ti.forEach(item => {
+
+        csv +=
+            `"${item.nome}",` +
+            `"${item.cargo}",` +
+            `"${item.setor}",` +
+            `"${item.equipamento}",` +
+            `"${item.licencaoffice}",` +
+            `"${item.celular}",` +
+            `"${item.chip}",` +
+            `"${item.protheus}",` +
+            `"${(item.modulosProtheus || []).join("; ")}",` +
+            `"${(item.moduloDL || []).join("; ")}",` +
+            `"${(item.moduloManufatura || []).join("; ")}",` +
+            `"${item.obs}"\n`;
+
+    });
+
+    const blob = new Blob(
+        [csv],
+        {
+            type:'text/csv;charset=utf-8;'
+        }
+    );
+
+    const link =
+        document.createElement('a');
+
+    link.href =
+        URL.createObjectURL(blob);
+
+    link.download =
+        'Levantamento_TI.csv';
+
+    link.click();
+
+}
+
+atualizarTabela();
+
+</script>
+
+</body>
+</html>
